@@ -20,11 +20,11 @@ export async function getStaticProps({ params }) {
 
   try {
     const ast = await fetchTweetAst(tweet)
-    return ast ? { props: { ast } } : { notFound: true }
+    return ast ? { props: { ast }, revalidate: 60 } : { notFound: true, revalidate: 60 }
   } catch (error) {
     // The Twitter API most likely died
     console.error(error)
-    return { notFound: true }
+    return { notFound: true, revalidate: 60 }
   }
 }
 
